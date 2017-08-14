@@ -1,0 +1,10 @@
+.fake-arrow {
+  height: 0;
+  position: absolute;
+  width: 0;
+  top: 7px;
+  left: -14px;
+   width: 0px;
+   border: 5px solid transparent;
+   border-left-color: #1a0dab;
+}
