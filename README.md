@@ -13,10 +13,8 @@ Use this extension:)
 - j(next link)
 - k(previous link)
 - Enter(open link)
-
-## In the future.
-- Ctrl+Enter(open new window)
-- Ctrl+Shift+Enter(open new window at background)
+- Ctrl+Enter(open new tab)
+- Ctrl+Shift+Enter(open new tab at background)
 
 ## License
 
