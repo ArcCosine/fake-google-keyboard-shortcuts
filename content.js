@@ -47,28 +47,17 @@
 
     // control
     var keyHandler = function(eve){
-		var node = eve.target;
-        if( node.nodeType === 1 && !/INPUT|TEXTAREA/.test(node.tagName.toUpperCase()) ){
-            switch(eve.keyCode){
-                case 13:
-                    eve.preventDefault();
-                    open();
-                    break;
-                case 74:
-                    eve.preventDefault();
-                    up();
-                    break;
-                case 75:
-                    eve.preventDefault();
-                    down();
-                    break;
-                case 191:
-                    eve.preventDefault();
-                    focus();
-                    break;
-                default:
-                    break;
-            }
+        var handleObj = {
+            13 : open,
+            74 : up,
+            75 : down,
+            191: focus
+        };
+
+        var node = eve.target;
+        if( node.nodeType === 1 && !/INPUT|TEXTAREA/.test(node.tagName.toUpperCase()) && typeof handleObj[eve.keyCode]  === "function"){
+            eve.preventDefault();
+            handleObj[eve.keyCode]();
         }
     };
 
