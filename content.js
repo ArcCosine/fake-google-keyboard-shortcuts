@@ -1,4 +1,5 @@
 (function(){
+    var port = chrome.extension.connect({name:"fakeGoogleKeyboardShortcuts"});
     var arrow, arrowPos = -1;
 
     var up = function(){
@@ -34,9 +35,19 @@
         arrowPos = pos;
     };
 
-    var open = function(){
+    var open = function(keyState){
         var nodes = document.querySelectorAll("h3.r a");
-        nodes[arrowPos].click();
+        if( keyState.ctrl === true ){
+            nodes[arrowPos].setAttribute("target" , "_blank" );
+        } else {
+            nodes[arrowPos].removeAttribute("target" );
+        }
+        if( keyState.shift === true ){
+            nodes[arrowPos]
+            port.postMessage({"action":"background","url":nodes[arrowPos].href})
+        } else {
+            nodes[arrowPos].click();
+        }
     };
 
     var focus = function(){
@@ -57,7 +68,10 @@
         var node = eve.target;
         if( node.nodeType === 1 && !/INPUT|TEXTAREA/.test(node.tagName.toUpperCase()) && typeof handleObj[eve.keyCode]  === "function"){
             eve.preventDefault();
-            handleObj[eve.keyCode]();
+            handleObj[eve.keyCode]({
+                ctrl: eve.ctrlKey,
+                shift: eve.shiftKey
+            });
         }
     };
 

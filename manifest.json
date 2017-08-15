@@ -1,12 +1,16 @@
 {
     "manifest_version" : 2,
     "name" : "fake-google-keyboard-shortcuts",
-    "version" : "0.0.2",
+    "version" : "0.0.3",
     "description": "This extension binding keyboard short cuts on google.com",
     "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
     "icons" : {
     },
-    "optional_permissions" : [ "https://www.google.com/" ],
+    "background" : {
+		"scripts" : ["background.js"],
+		"persistent" : false	
+    },
+    "optional_permissions" : [ "tabs", "https://www.google.com/" ],
     "content_scripts" : [
         {
             "matches" : ["https://www.google.co.jp/*"],
