@@ -28,7 +28,7 @@
         }
     };
     var move = function(no){
-        var nodes = document.querySelectorAll("h3.r a");
+        var nodes = document.querySelectorAll("h3.r a:first-child");
         var nextPos = arrowPos+no;
         var pos = nextPos < 0 ? 0 : nextPos > nodes.length-1 ? nodes.length-1 : nextPos;
         moveArrow(nodes[pos]);
@@ -36,7 +36,7 @@
     };
 
     var open = function(keyState){
-        var nodes = document.querySelectorAll("h3.r a");
+        var nodes = document.querySelectorAll("h3.r a:first-child");
         if( keyState.ctrl === true ){
             nodes[arrowPos].setAttribute("target" , "_blank" );
         } else {
