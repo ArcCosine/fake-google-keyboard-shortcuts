@@ -1,9 +1,7 @@
 (function(){
-    chrome.runtime.onConnect.addListener(function(port){
-        port.onMessage.addListener(function(msg){
-            if( msg.action === "background" ){
-                chrome.tabs.create({ url: msg.url, active: false });
-            }
-        });
+    chrome.runtime.onMessage.addListener(function(msg, sender,sendResponse){
+        if( msg.action === "background" ){
+            chrome.tabs.create({ url: msg.url, active: false });
+        }
     });
 })();
