@@ -14,7 +14,7 @@ Use this extension:)
 - k(previous link)
 - Enter(open link)
 - Ctrl+Enter(open new tab)
-- Ctrl+Shift+Enter(open new tab at background)
+- Shift+Enter(open new tab at background)
 
 ## License
 
