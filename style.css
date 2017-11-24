@@ -8,3 +8,8 @@
    border: 5px solid transparent;
    border-left-color: #1a0dab;
 }
+.fake-arrow.right {
+  left: 90px;
+   border-left-color: transparent;
+   border-right-color: #1a0dab;
+}

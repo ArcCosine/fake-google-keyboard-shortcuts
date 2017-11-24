@@ -19,7 +19,12 @@
             arrow = document.body.appendChild(document.createElement("div"));
             arrow.classList.add("fake-arrow");
         }
-        var appendNode = node.parentNode.parentNode.parentNode.parentNode;
+        if( node.id === "pnnext" ){
+            arrow.classList.add("right");
+        } else {
+            arrow.classList.remove("right");
+        }
+        var appendNode = node.id.indexOf("pn") > -1 ? node.parentNode : node.parentNode.parentNode.parentNode.parentNode;
         appendNode.style.position = "relative";
         appendNode.appendChild(arrow);
         if(!isInView(appendNode)){
@@ -27,7 +32,7 @@
         }
     };
     var move = function(no){
-        var nodes = document.querySelectorAll("h3.r a:first-child");
+        var nodes = document.querySelectorAll("h3.r a:first-child,#pnprev,#pnnext");
         var nextPos = arrowPos+no;
         var pos = nextPos < 0 ? 0 : nextPos > nodes.length-1 ? nodes.length-1 : nextPos;
         moveArrow(nodes[pos]);
@@ -35,7 +40,7 @@
     };
 
     var open = function(keyState){
-        var nodes = document.querySelectorAll("h3.r a:first-child");
+        var nodes = document.querySelectorAll("h3.r a:first-child,#pnprev,#pnnext");
         if( keyState.ctrl === true ){
             nodes[arrowPos].setAttribute("target" , "_blank" );
         } else {
