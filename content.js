@@ -1,5 +1,9 @@
 (function(){
-    var arrow, arrowPos = -1;
+    var _arrow, _arrowPos = -1;
+
+    // TODO
+    // This _selector may change on a regular basis every time Google's HTML changes.
+    var _selector = '.r > a:first-child,#pnprev,#pnnext';
 
     var up = function(){
         move(1);
@@ -15,51 +19,53 @@
     };
 
     var moveArrow = function(node){
-        if( !arrow ){
-            arrow = document.body.appendChild(document.createElement("div"));
-            arrow.classList.add("fake-arrow");
+        if( !_arrow ){
+            _arrow = document.body.appendChild(document.createElement("div"));
+            _arrow.classList.add("fake-arrow");
         }
         if( node.id === "pnnext" ){
-            arrow.classList.add("right");
+            _arrow.classList.add("right");
         } else {
-            arrow.classList.remove("right");
+            _arrow.classList.remove("right");
         }
         var appendNode = node.id.indexOf("pn") > -1 ? node.parentNode : node.parentNode.parentNode.parentNode.parentNode;
         appendNode.style.position = "relative";
-        appendNode.appendChild(arrow);
+        appendNode.appendChild(_arrow);
         if(!isInView(appendNode)){
-            scrollTo( 0, appendNode.offsetTop );
+            window.scrollTo({
+                top: appendNode.offsetTop,
+                behavior: 'smooth'
+            });
         }
     };
     var move = function(no){
-        var nodes = document.querySelectorAll("h3.r a:first-child,#pnprev,#pnnext");
-        var nextPos = arrowPos+no;
+        var nodes = document.querySelectorAll(_selector);
+        var nextPos = _arrowPos+no;
         var pos = nextPos < 0 ? 0 : nextPos > nodes.length-1 ? nodes.length-1 : nextPos;
         moveArrow(nodes[pos]);
-        arrowPos = pos;
+        _arrowPos = pos;
     };
 
     var open = function(keyState){
-        var nodes = document.querySelectorAll("h3.r a:first-child,#pnprev,#pnnext");
+        var nodes = document.querySelectorAll(_selector);
         if( keyState.ctrl === true ){
-            nodes[arrowPos].setAttribute("target" , "_blank" );
+            nodes[_arrowPos].setAttribute("target", "_blank");
         } else {
-            nodes[arrowPos].removeAttribute("target" );
+            nodes[_arrowPos].removeAttribute("target");
         }
         if( keyState.shift === true ){
-            nodes[arrowPos]
-            chrome.runtime.sendMessage({"action":"background","url":nodes[arrowPos].href}, function(response){
+            nodes[_arrowPos]
+            chrome.runtime.sendMessage({"action":"background","url":nodes[_arrowPos].href}, function(response){
                 //do response
             });
         } else {
-            nodes[arrowPos].click();
+            nodes[_arrowPos].click();
         }
     };
 
     var focus = function(){
-        arrowPos = -1;//reset
-        var input = document.getElementById("lst-ib");
-        input.focus();
+        _arrowPos = -1;//reset
+        document.getElementById("lst-ib").focus();
     };
 
     // control

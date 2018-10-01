@@ -3,9 +3,12 @@
 ## Overview
 
 This script working only google.com.
-We love keyboard shortcuts,but google disabled that function.
+We **loved** keyboard shortcuts,but google disabled that function.
 What can we do?
-Use this extension:)
+That's a very simple answer.
+
+
+**Use this extension:)**
 
 
 ## Short cut list.
@@ -15,10 +18,14 @@ Use this extension:)
 - Enter(open link)
 - Ctrl+Enter(open new tab)
 - Shift+Enter(open new tab at background)
+- /(focus search box)
+
 
 ## License
 
 Public Domain.
 
 
+## Request
 
+Reply [@ArcCosine](https://twitter.com/ArcCosine/).

@@ -4,12 +4,12 @@
   width: 0;
   top: 7px;
   left: -14px;
-   width: 0px;
-   border: 5px solid transparent;
-   border-left-color: #1a0dab;
+  width: 0px;
+  border: 5px solid transparent;
+  border-left-color: #1a0dab;
 }
 .fake-arrow.right {
   left: 90px;
-   border-left-color: transparent;
-   border-right-color: #1a0dab;
+  border-left-color: transparent;
+  border-right-color: #1a0dab;
 }
