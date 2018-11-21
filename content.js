@@ -65,11 +65,12 @@
 
     var focus = function(){
         _arrowPos = -1;//reset
-        document.getElementById("lst-ib").focus();
+        document.querySelector(".gLFyf.gsfi").focus();
     };
 
     // control
     var keyHandler = function(event){
+        console.log(event.key);
         var handleObj = {
             "Enter" : open,
             "j": up,
