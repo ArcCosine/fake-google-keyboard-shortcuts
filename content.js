@@ -1,24 +1,24 @@
-(function(){
-    var _arrow, _arrowPos = -1;
+(()=>{
+    let _arrow, _arrowPos = -1;
 
     // TODO
     // This _selector may change on a regular basis every time Google's HTML changes.
-    var _selector = '.r > a:first-child,#pnprev,#pnnext';
+    const _selector = '.r > a,#pnprev,#pnnext';
 
-    var up = function(){
+    const up = () => {
         move(1);
     };
 
-    var down = function(){
+    const down = () => {
         move(-1);
     };
 
-    var isInView = function(node){
-        var rect = node.getBoundingClientRect();
+    const isInView = (node) => {
+        const rect = node.getBoundingClientRect();
         return node === document.elementFromPoint(rect.left, rect.top);
     };
 
-    var moveArrow = function(node){
+    const moveArrow = (node) => {
         if( !_arrow ){
             _arrow = document.body.appendChild(document.createElement("div"));
             _arrow.classList.add("fake-arrow");
@@ -28,7 +28,7 @@
         } else {
             _arrow.classList.remove("right");
         }
-        var appendNode = node.id.indexOf("pn") > -1 ? node.parentNode : node.parentNode.parentNode.parentNode.parentNode;
+        const appendNode = node.id.indexOf("pn") > -1 ? node.parentNode : node.parentNode.parentNode.parentNode.parentNode;
         appendNode.style.position = "relative";
         appendNode.appendChild(_arrow);
         if(!isInView(appendNode)){
@@ -38,24 +38,25 @@
             });
         }
     };
-    var move = function(no){
-        var nodes = document.querySelectorAll(_selector);
-        var nextPos = _arrowPos+no;
-        var pos = nextPos < 0 ? 0 : nextPos > nodes.length-1 ? nodes.length-1 : nextPos;
+    const move = (no) => {
+        const nodes = document.querySelectorAll(_selector);
+        const nextPos = _arrowPos+no;
+        const pos = nextPos < 0 ? 0 : nextPos > nodes.length-1 ? nodes.length-1 : nextPos;
         moveArrow(nodes[pos]);
         _arrowPos = pos;
     };
 
-    var open = function(keyState){
-        var nodes = document.querySelectorAll(_selector);
+    const open = (keyState) => {
+        const nodes = document.querySelectorAll(_selector);
         if( keyState.ctrl === true ){
             nodes[_arrowPos].setAttribute("target", "_blank");
+            nodes[_arrowPos].setAttribute("rel", "noopener");
         } else {
             nodes[_arrowPos].removeAttribute("target");
         }
         if( keyState.shift === true ){
             nodes[_arrowPos]
-            chrome.runtime.sendMessage({"action":"background","url":nodes[_arrowPos].href}, function(response){
+            chrome.runtime.sendMessage({"action":"background","url":nodes[_arrowPos].href}, (response) => {
                 //do response
             });
         } else {
@@ -63,15 +64,15 @@
         }
     };
 
-    var focus = function(){
+    const focus = () => {
         _arrowPos = -1;//reset
         document.querySelector(".gLFyf.gsfi").focus();
     };
 
     // control
-    var keyHandler = function(event){
-        console.log(event.key);
-        var handleObj = {
+    const keyHandler = (event) => {
+        //console.log(event.key);
+        const handleObj = {
             "Enter" : open,
             "j": up,
             "k": down,
@@ -81,7 +82,7 @@
             return; // Do nothing if the event was already processed
         }
 
-        var node = event.target;
+        const node = event.target;
         if( node.nodeType === 1 && !/INPUT|TEXTAREA/.test(node.tagName.toUpperCase()) && typeof handleObj[event.key]  === "function"){
             event.preventDefault();
             handleObj[event.key]({
