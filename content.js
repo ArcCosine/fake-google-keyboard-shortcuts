@@ -3,7 +3,7 @@
     let _arrowPos = -1;
 
     // This _selector may change on a regular basis every time Google's HTML changes.
-    const _selector = ".r > a,#pnprev,#pnnext";
+    const _selector = ".g,#pnprev,#pnnext";
 
     // append fake arrow
     const appendArrow = () => {
@@ -20,20 +20,20 @@
         move(-1);
     };
 
-    const moveArrow = node => {
-        const appendNode = node.parentNode;
-
-        if (node.id === "pnnext" || node.id === "pnprev") {
-            appendNode.style.position = "relative";
-        }
-
-        if (node.id === "pnnext") {
-            _arrow.classList.add("right");
+    const moveArrow = appendNode => {
+        if (appendNode.id === "pnnext" || appendNode.id === "pnprev") {
+            appendNode.parentNode.style.position = "relative";
+            if (appendNode.id === "pnnext") {
+                _arrow.classList.add("right");
+            } else {
+                _arrow.classList.remove("right");
+            }
+            appendNode.parentNode.appendChild(_arrow);
         } else {
+            appendNode.style.position = "relative";
             _arrow.classList.remove("right");
+            appendNode.appendChild(_arrow);
         }
-
-        appendNode.appendChild(_arrow);
 
         const headerHeight = document
             .querySelector(".sfbg")
@@ -63,22 +63,22 @@
 
     const open = keyState => {
         const nodes = document.querySelectorAll(_selector);
+        const linkNode = nodes[_arrowPos].tagName.toLowerCase() === 'a' ? nodes[_arrowPos] : nodes[_arrowPos].querySelectorAll('a')[0];
         if (keyState.ctrl === true) {
-            nodes[_arrowPos].setAttribute("target", "_blank");
-            nodes[_arrowPos].setAttribute("rel", "noopener");
+            linkNode.setAttribute("target", "_blank");
+            linkNode.setAttribute("rel", "noopener");
         } else {
-            nodes[_arrowPos].removeAttribute("target");
+            linkNode.removeAttribute("target");
         }
         if (keyState.shift === true) {
-            nodes[_arrowPos];
             chrome.runtime.sendMessage(
-                { action: "background", url: nodes[_arrowPos].href },
+                { action: "background", url: linkNode.href },
                 response => {
                     //do response
                 }
             );
         } else {
-            nodes[_arrowPos].click();
+            linkNode.click();
         }
     };
 
