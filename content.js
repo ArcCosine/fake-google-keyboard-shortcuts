@@ -1,15 +1,13 @@
 (() => {
-    let arrow;
     let _arrowPos = -1;
 
     // This _selector may change on a regular basis every time Google's HTML changes.
-    const _selector = ".g,#pnprev,#pnnext";
+    const _selector = "#center_col .g,#pnprev,#pnnext";
 
     // append fake arrow
     const appendArrow = () => {
-        _arrow = document.body.appendChild(document.createElement("div"));
+        const _arrow = document.body.appendChild(document.createElement("div"));
         _arrow.classList.add("fake-arrow");
-        down();
     };
 
     const up = () => {
@@ -21,6 +19,7 @@
     };
 
     const moveArrow = appendNode => {
+        const _arrow = document.querySelector('.fake-arrow');
         if (appendNode.id === "pnnext" || appendNode.id === "pnprev") {
             appendNode.parentNode.style.position = "relative";
             if (appendNode.id === "pnnext") {
@@ -82,19 +81,12 @@
         }
     };
 
-    const focus = () => {
-        _arrowPos = -1; //reset
-        document.querySelector(".gLFyf.gsfi").focus();
-    };
-
     // control
     const keyHandler = event => {
-        //console.log(event.key);
         const handleObj = {
             Enter: open,
             j: up,
             k: down,
-            "/": focus
         };
         if (event.defaultPrevented) {
             return; // Do nothing if the event was already processed
