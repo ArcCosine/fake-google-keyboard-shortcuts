@@ -6,10 +6,10 @@
   left: -14px;
   width: 0px;
   border: 5px solid transparent;
-  border-left-color: #1a0dab;
+  border-left-color: #8ab4f8;
 }
 .fake-arrow.right {
   left: 90px;
   border-left-color: transparent;
-  border-right-color: #1a0dab;
+  border-right-color: #8ab4f8;
 }

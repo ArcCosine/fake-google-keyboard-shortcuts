@@ -18,8 +18,8 @@
         move(-1);
     };
 
-    const moveArrow = appendNode => {
-        const _arrow = document.querySelector('.fake-arrow');
+    const moveArrow = (appendNode) => {
+        const _arrow = document.querySelector(".fake-arrow");
         if (appendNode.id === "pnnext" || appendNode.id === "pnprev") {
             appendNode.parentNode.style.position = "relative";
             if (appendNode.id === "pnnext") {
@@ -44,10 +44,10 @@
 
         window.scrollTo({
             top: mypos,
-            behavior: "smooth"
+            behavior: "smooth",
         });
     };
-    const move = no => {
+    const move = (no) => {
         const nodes = document.querySelectorAll(_selector);
         const nextPos = _arrowPos + no;
         const pos =
@@ -60,9 +60,12 @@
         _arrowPos = pos;
     };
 
-    const open = keyState => {
+    const open = (keyState) => {
         const nodes = document.querySelectorAll(_selector);
-        const linkNode = nodes[_arrowPos].tagName.toLowerCase() === 'a' ? nodes[_arrowPos] : nodes[_arrowPos].querySelectorAll('a')[0];
+        const linkNode =
+            nodes[_arrowPos].tagName.toLowerCase() === "a"
+                ? nodes[_arrowPos]
+                : nodes[_arrowPos].querySelectorAll("a")[0];
         if (keyState.ctrl === true) {
             linkNode.setAttribute("target", "_blank");
             linkNode.setAttribute("rel", "noopener");
@@ -72,8 +75,9 @@
         if (keyState.shift === true) {
             chrome.runtime.sendMessage(
                 { action: "background", url: linkNode.href },
-                response => {
+                (response) => {
                     //do response
+                    //console.log(response);
                 }
             );
         } else {
@@ -82,7 +86,7 @@
     };
 
     // control
-    const keyHandler = event => {
+    const keyHandler = (event) => {
         const handleObj = {
             Enter: open,
             j: up,
@@ -101,12 +105,12 @@
             event.preventDefault();
             handleObj[event.key]({
                 ctrl: event.ctrlKey,
-                shift: event.shiftKey
+                shift: event.shiftKey,
             });
         }
     };
 
     // Entry Point
-    document.addEventListener('DOMContentLoaded', appendArrow, false );
+    document.addEventListener("DOMContentLoaded", appendArrow, false);
     document.addEventListener("keydown", keyHandler, false);
 })();
