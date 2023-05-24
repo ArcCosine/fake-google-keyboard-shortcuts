@@ -12,7 +12,6 @@
 		"service_worker" : "background.js",
         "type" : "module"
     },
-    "permissions": ["tabs"],
     "optional_host_permissions" : ["https://www.google.com/" ],
     "content_scripts" : [
         {

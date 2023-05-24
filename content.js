@@ -67,12 +67,18 @@
                 ? nodes[_arrowPos]
                 : nodes[_arrowPos].querySelectorAll("a")[0];
         if (keyState.ctrl === true) {
-            linkNode.setAttribute("target", "_blank");
-            linkNode.setAttribute("rel", "noopener");
-        } else {
+
             linkNode.removeAttribute("target");
-        }
-        if (keyState.shift === true) {
+            chrome.runtime.sendMessage({
+                action: "foreground",
+                url: linkNode.href
+            },
+                (response) => {
+                    // do response
+                    // console.log(response);
+                }
+            );
+        } else if (keyState.shift === true) {
             chrome.runtime.sendMessage(
                 { action: "background", url: linkNode.href },
                 (response) => {
